@@ -1,11 +1,17 @@
 #!/bin/bash
 
-function clean_packages_cache_for_pacman() {
-    echo "Start cache cleaning for pacman..." ;
+function logs_cache_clean() {
+    func=$1 ;
+    prog=$2 ;
+    echo "Start cache cleaning for ${prog}..." ;
+    $func ;
+    echo "Finished cache cleaning for ${prog}.✅" ;
+}
 
+function clean_packages_cache_for_pacman() {
     if [ ! -x "$(command -v paccache)" ]; then
         echo "⚠️ paccache might not be installed. ⚠️ Impossible to clean the cache without it." ;
-        #exit 2 ;
+        exit 2 ;
     fi
 
     echo "" ;
@@ -44,26 +50,34 @@ function clean_packages_cache_for_pacman() {
         "crazy") crazy ;;
         *) echo "No cache cleaning option typed." ;
     esac
-
-    echo "Finished cache cleaning for pacman. ✅"
 }
 
 function help() {
     echo "" ;
     echo "Cache cleaning for different tools:" ;
+    echo "- Cache cleaning for go [go]" ;
     echo "- Cache cleaning for pacman [pacman]" ;
     echo "" ;
     echo "~ [help] to display this help." ;
     echo "~ [exit] to exit cache cleaning."
 }
 
+function clean_go_cache() {
+    if [ ! -x "$(command -v go)" ]; then
+        echo "⚠️ go might not be installed.⚠️ No need to clean cache." ;
+        exit 2 ;
+    fi
+    go clean -cache ;
+    echo "Cleaned .cache/go-build. ✅" ;
+}
 
 help ;
 while read cmd ; do
     case $cmd in
         "help") help ;;
         "exit") break ;;
-        "pacman") clean_packages_cache_for_pacman ;;
+        "go") logs_cache_clean clean_go_cache "go" ;;
+        "pacman") logs_cache_clean clean_packages_cache_for_pacman "pacman" ;;
     esac
     echo "Continue on cache cleaning. [help] to display the help." ;
 done ;
