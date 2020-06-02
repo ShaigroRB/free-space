@@ -3,11 +3,13 @@
 scripts="./scripts" ;
 
 # docker
-if [ -f "${scripts}/prune-docker.sh" ]; then
+read -p "Docker pruning? [y/n]" answer ;
+if [ "$answer" == "y" ] && [ -f "${scripts}/prune-docker.sh" ]; then
     . "${scripts}/prune-docker.sh" ;
 fi
 
 # trash
-if [ -f "${scripts}/trash.sh" ]; then
+read -p "Trash cleaning? [y/n]" answer ;
+if [ "$answer" == "y" ] && [ -f "${scripts}/trash.sh" ]; then
     . "${scripts}/trash.sh" ;
 fi
