@@ -21,3 +21,9 @@ read -p "Trash cleaning? [y/n]" answer ;
 if [ "$answer" == "y" ] && [ -f "${scripts}/trash.sh" ]; then
     logs_free "${scripts}/trash.sh" "trash 🗑️" ;
 fi
+
+# cache
+read -p "Cache cleaning? [y/n]" answer ;
+if [ "$answer" == "y" ] && [ -f "${scripts}/clean-cache.sh" ]; then
+    logs_free "${scripts}/clean-cache.sh" "cache 🍪" ;
+fi
