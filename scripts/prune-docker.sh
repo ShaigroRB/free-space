@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Starting docker 🐳 pruning." ;
-
 if [ -x "$(command -v docker )" ]; then
     echo "⚠️ This script might fail if docker is not running and you do not have the right to use docker. ⚠️" ;
 else
@@ -83,5 +81,3 @@ case "$pruningtype" in
     "step") log_func step "step by step" ;;
     *) echo "No pruning option typed." ;;
 esac
-
-echo "Docker 🐳 pruning finished. ✅" ;
